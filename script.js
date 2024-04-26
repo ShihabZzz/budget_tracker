@@ -4,6 +4,13 @@ let amountContainer = [];
 let income = 0;
 let expense = 0;
 
+
+let saveAll_db = (income, expense, amountContainer) => {
+    localStorage.setItem("income_db", income);
+    localStorage.setItem("expense_db", expense);
+    localStorage.setItem("amounts_db", JSON.stringify(amountContainer));
+}
+
 let updateIncomeUI = () => {
     let incomeValue = `Income: ${income}`;
     document.getElementById("incomeData").innerText = incomeValue;
@@ -47,9 +54,7 @@ function deleteItem(index) {
     amountContainer.splice(index, 1);
     (spliceType === "income" ? income -= spliceAmount : expense -= Math.abs(spliceAmount));
 
-    localStorage.setItem("income_db", income);
-    localStorage.setItem("expense_db", expense);
-    localStorage.setItem("amounts_db", JSON.stringify(amountContainer));
+    saveAll_db(income, expense, amountContainer);
 
     updateIncomeUI();
     updateExpenseUI();
@@ -70,9 +75,7 @@ function editItem(index) {
             amountContainer[index].amountData = itemAmount;
             amountContainer[index].amountType = itemType;
 
-            localStorage.setItem("income_db", income);
-            localStorage.setItem("expense_db", expense);
-            localStorage.setItem("amounts_db", JSON.stringify(amountContainer));
+            saveAll_db(income, expense, amountContainer);
 
             updateIncomeUI();
             updateExpenseUI();
@@ -88,16 +91,13 @@ let preData = localStorage.getItem("amounts_db");
 
 if (preData) {
     amountContainer = JSON.parse(preData); // parse JSON format => array of object
-
     if (amountContainer.length > 0) {
         idx = amountContainer[amountContainer.length - 1].idx + 1 // set proper idx;
         income = Number(localStorage.getItem("income_db"));
         expense = Number(localStorage.getItem("expense_db"));
     }
 } else {
-    localStorage.setItem("income_db", income);
-    localStorage.setItem("expense_db", expense);
-    localStorage.setItem("amounts_db", JSON.stringify(amountContainer));
+    saveAll_db(income, expense, amountContainer);
 }
 
 // initial calling
@@ -122,9 +122,7 @@ okClick.addEventListener('click', () => {
         };
         amountContainer.push(parsingContainer);
 
-        localStorage.setItem("amounts_db", JSON.stringify(amountContainer));
-        localStorage.setItem("income_db", income);
-        localStorage.setItem("expense_db", expense);
+        saveAll_db(income, expense, amountContainer);
 
         // update UI
         updateIncomeUI();
