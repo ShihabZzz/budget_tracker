@@ -1,22 +1,3 @@
-// let idx = 0;
-// let amountConatainer = [];
-// let amountData = Number(document.getElementById('amount').value);
-// let amountType = amountData > 0 ? "income" : amountData < 0 ? "expense" : "zero";
-
-// let parsingConatainer = {
-//     "idx": `${idx++}`,
-//     "amountData": `${amountData}`,
-//     "amountType": `${amountType}`,
-// };
-
-// let okClick = document.getElementById('ok');
-
-// onClick.addEventListener('click', () => {
-//     amountConatainer.push(parsingConatainer);
-//     localStorage.setItem("amounts", JSON.stringify(amountConatainer));
-// });
-
-
 let idx = 0;
 let amountContainer = [];
 
@@ -43,9 +24,6 @@ let detailsUI = () => {
         const amount = amountContainer[index].amountData;
         const type = amountContainer[index].amountType;
 
-        // console.log(amount);
-        // console.log(type);
-
         let div = document.createElement('div');
         div.classList.add("px-6", "pt-6", "flex", "justify-between", "bg-gray-200")
 
@@ -68,7 +46,6 @@ function deleteItem(index) {
     let spliceType = amountContainer[index].amountType;
     amountContainer.splice(index, 1);
     (spliceType === "income" ? income -= spliceAmount : expense -= Math.abs(spliceAmount));
-    // console.log(spliceAmount);
 
     localStorage.setItem("income_db", income);
     localStorage.setItem("expense_db", expense);
@@ -91,7 +68,6 @@ function editItem(index) {
             (amountContainer[index].type === "income" ? income -= amountContainer[index].amountData : expense -= Math.abs(amountContainer[index].amountData));
             (itemAmount > 0 ? income += itemAmount : expense += Math.abs(itemAmount));
             amountContainer[index].amountData = itemAmount;
-            // console.log(itemAmount);
             amountContainer[index].amountType = itemType;
 
             localStorage.setItem("income_db", income);
@@ -113,17 +89,11 @@ let preData = localStorage.getItem("amounts_db");
 if (preData) {
     amountContainer = JSON.parse(preData); // parse JSON format => array of object
 
-    // console.log(amountContainer.length)
-
     if (amountContainer.length > 0) {
         idx = amountContainer[amountContainer.length - 1].idx + 1 // set proper idx;
         income = Number(localStorage.getItem("income_db"));
         expense = Number(localStorage.getItem("expense_db"));
     }
-
-    // console.log(amountContainer);
-    // console.log(idx);
-    // console.log(income);
 } else {
     localStorage.setItem("income_db", income);
     localStorage.setItem("expense_db", expense);
@@ -163,5 +133,3 @@ okClick.addEventListener('click', () => {
     }
 
 });
-
-// let deleteReq = document.getElementById(detailsData).addEventListener();
