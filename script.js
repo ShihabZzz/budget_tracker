@@ -70,7 +70,7 @@ function editItem(index) {
         if (itemType === "zero") {
             alert("Zero is not acceptable!");
         } else {
-            (amountContainer[index].type === "income" ? income -= amountContainer[index].amountData : expense -= Math.abs(amountContainer[index].amountData));
+            (amountContainer[index].amountType === "income" ? income -= amountContainer[index].amountData : expense -= Math.abs(amountContainer[index].amountData));
             (itemAmount > 0 ? income += itemAmount : expense += Math.abs(itemAmount));
             amountContainer[index].amountData = itemAmount;
             amountContainer[index].amountType = itemType;
