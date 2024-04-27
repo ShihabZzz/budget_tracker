@@ -24,6 +24,7 @@ let updateExpenseUI = () => {
 let detailsUI = () => {
     let details = document.getElementById("detailsData");
 
+
     // Empty-out at every request
     details.innerHTML = "";
 
@@ -39,13 +40,24 @@ let detailsUI = () => {
             <p class="font-medium text-xl">${amount}</p>
             <p class="font-normal text-sm">${type}</p>
         </div>
+
         <div class="flex space-x-4">
-            <a href="#" onClick="deleteItem(${index})">Delete</a>
-            <a href="#" onClick="editItem(${index})">Edit</a>
+            <a href="#" id="${index}" class="delete">Delete</a>
+            <a href="#" id="${index}" class="edit">Edit</a>
         </div>
    `;
         details.appendChild(div);
     }
+    details.addEventListener('click', (event) => {
+        event.stopImmediatePropagation();
+        if (event.target.closest('a').classList.contains('delete')) {
+            const index = event.target.closest('a').id;
+            deleteItem(index);
+        } else if (event.target.closest('a').classList.contains('edit')) {
+            const index = event.target.closest('a').id;
+            editItem(index);
+        }
+    });
 }
 
 function deleteItem(index) {
